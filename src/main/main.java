@@ -2,30 +2,46 @@ package main;
 import java.util.Scanner;
 
 public class main {
-	public static void asterisco() {
-		 System.out.println("*********************************************************************************");
-	}
-
-	public static void main(String[] args) {		
+	public static void main(String[] args) {				
+		Scanner input = new Scanner(System.in);		
 		String option;
-		Scanner input = new Scanner(System.in);
-		
-		while(true) {			
+		int optionTest = 0;
+		boolean validacao = false;
+		do {			
 			System.out.println("*********************************TECH ASSISTANCE*********************************");	
-			asterisco();
-			System.out.println("****************Você é um(a) atendente ou um(a) técnico(a)?**********************");
-			asterisco();
-			System.out.println("1 - Atendente\n2 - Técnico (a)");
+			System.out.println("Escolha uma opção:\n");
+			System.out.println("1 - Atendente\n2 - Técnico (a)\n3 - Exibir informações\n0 - Sair");
 			option = input.nextLine();
 			
-			if (option == "1" || option == "2")
-				break;
-			else {
-				asterisco();
-				System.out.println("******************************OPÇÃO INVÁLIDA************************************");		
-				asterisco();		
+			try {
+				optionTest = Integer.parseInt(option);
+				
+				if (optionTest >= 0 && optionTest < 4) {
+					validacao = true;
+					
+					switch(optionTest) {
+					case 1: //atendente
+						break;
+					case 2: //tecnico
+						break;
+					case 3: //infos
+						break;
+					case 0: // sair
+						break;			
+					}
+				}
+				else {
+					System.out.println("\n******************************OPÇÃO INVÁLIDA************************************\n");
+				}					
 			}
-		}
+			catch (Exception e) {
+				System.out.println("\n******************************OPÇÃO INVÁLIDA************************************\n");
+			}	
+			
+		} while(!validacao);
+		
+			
+		
 	}
 }
 	
