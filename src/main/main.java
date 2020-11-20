@@ -1,12 +1,14 @@
 package main;
+import java.awt.Menu;
 import java.util.Scanner;
-
 public class main {
-	public static void main(String[] args) {				
-		Scanner input = new Scanner(System.in);		
+	
+	public static void menuPrincipal() {
+		Scanner input = new Scanner(System.in);	
+		Atendente atendente = new Atendente();
 		String option;
 		int optionTest = 0;
-		boolean validacao = false;
+		boolean validacao = false;				
 		do {			
 			System.out.println("*********************************TECH ASSISTANCE*********************************");	
 			System.out.println("Escolha uma opção:\n");
@@ -20,14 +22,17 @@ public class main {
 					validacao = true;
 					
 					switch(optionTest) {
-					case 1: //atendente
-						break;
-					case 2: //tecnico
-						break;
-					case 3: //infos
-						break;
-					case 0: // sair
-						break;			
+						case 1: //atendente
+							atendente.processoAtendente();
+							break;
+						case 2: //tecnico
+							break;
+						case 3: //infos
+							atendente.exibeInformacoes();
+							break;
+						case 0: // sair
+							System.exit(0);
+							break;			
 					}
 				}
 				else {
@@ -39,9 +44,16 @@ public class main {
 			}	
 			
 		} while(!validacao);
-		
-			
-		
 	}
+	
+	public void exibeInformacoes() {
+		Atendente atendente = new Atendente();
+		atendente.exibeInformacoes();
+	}
+	
+	public static void main(String[] args) {				
+		menuPrincipal();
+		
+	}	
 }
 	
