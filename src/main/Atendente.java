@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class Atendente extends Pessoa {
 	public String atendentes[][] = {{"Maria", "44504296801"}, {"Julia", "42123496501"}};	
 	Scanner input = new Scanner(System.in);
-	main main = new main();
-	Servico servico = new Servico();
+	main main = new main();	
 	
 	public int menuAtendente() {
 		boolean validacao = false;
@@ -36,6 +35,7 @@ public class Atendente extends Pessoa {
 	
 	@SuppressWarnings("static-access")
 	public void processoAtendente() {
+		Servico servico = new Servico();
 		int option = menuAtendente();
 		
 		do {
@@ -44,7 +44,7 @@ public class Atendente extends Pessoa {
 				servico.registraServico();
 				break;
 			case 2: //exibeInfo
-				exibeInformacoes();				
+				exibeInformacoes();		 		
 				break;		
 			}
 			option = menuAtendente();

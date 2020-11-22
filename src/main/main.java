@@ -1,15 +1,15 @@
 package main;
-import java.awt.Menu;
 import java.util.Scanner;
-public class main {
-	
+
+public class main {	
 	public static void menuPrincipal() {
 		Scanner input = new Scanner(System.in);	
 		Atendente atendente = new Atendente();
+		Servico servico = new Servico();
 		String option;
-		int optionTest = 0;
-		boolean validacao = false;				
-		do {			
+		int optionTest = 0;		
+		
+		while(true){			
 			System.out.println("*********************************TECH ASSISTANCE*********************************");	
 			System.out.println("Escolha uma opção:\n");
 			System.out.println("1 - Atendente\n2 - Técnico (a)\n3 - Exibir informações\n0 - Sair");
@@ -18,8 +18,7 @@ public class main {
 			try {
 				optionTest = Integer.parseInt(option);
 				
-				if (optionTest >= 0 && optionTest < 4) {
-					validacao = true;
+				if (optionTest >= 0 && optionTest < 4) {					
 					
 					switch(optionTest) {
 						case 1: //atendente
@@ -29,6 +28,7 @@ public class main {
 							break;
 						case 3: //infos
 							atendente.exibeInformacoes();
+							servico.exibeInformacoes();
 							break;
 						case 0: // sair
 							System.exit(0);
@@ -41,19 +41,13 @@ public class main {
 			}
 			catch (Exception e) {
 				System.out.println("\n******************************OPÇÃO INVÁLIDA************************************\n");
-			}	
-			
-		} while(!validacao);
+			}			
+		}
 	}
 	
 	public void exibeInformacoes() {
 		Atendente atendente = new Atendente();
 		atendente.exibeInformacoes();
-	}
-	
-	public static void main(String[] args) {				
-		menuPrincipal();
-		
-	}	
+	}		
 }
 	
