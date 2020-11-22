@@ -36,6 +36,7 @@ public class Atendente extends Pessoa {
 	@SuppressWarnings("static-access")
 	public void processoAtendente() {
 		Servico servico = new Servico();
+		GServico gservico = new GServico();
 		int option = menuAtendente();
 		
 		do {
@@ -44,7 +45,8 @@ public class Atendente extends Pessoa {
 				servico.registraServico();
 				break;
 			case 2: //exibeInfo
-				exibeInformacoes();		 		
+				exibeInformacoes();	
+				gservico.exibeInformacoes();
 				break;		
 			}
 			option = menuAtendente();
