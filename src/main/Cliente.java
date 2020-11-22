@@ -1,8 +1,35 @@
 package main;
-import java.util.Scanner;
 
-public class Cliente extends Pessoa {
-	Scanner input = new Scanner(System.in);	
-	String[][] clientes = {{"Joao", "44504296801","AV5 1010", "35331220"}, {"Juliano", "42123496501", "RUA 7 571","30233154"}};			
+public class Cliente extends Pessoa{
+	private String telefone;
+	private String endereco;
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setCPF(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getCPF() {
+		return cpf;
+	}
+	
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+	
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
 	
 }

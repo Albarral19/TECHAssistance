@@ -1,8 +1,10 @@
 package main;
 
 public class TesteProjeto {
+
 	public static void main(String[] args) {
-		main main = new main();
-		main.menuPrincipal();
+		// TODO Auto-generated method stub
+		Main main = new Main();
+		main.processa();
 	}
 }
