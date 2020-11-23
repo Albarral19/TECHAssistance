@@ -82,7 +82,8 @@ public class Main {
 					break;
 				case "4":
 					System.out.println("|---------------SERVIÇOS-------------|");
-					imprimirSolicitacoes();					
+					imprimirSolicitacoes();
+					imprimirServicos();
 					break;
 				case "0":
 					System.out.println();
@@ -192,64 +193,96 @@ public class Main {
 	public void processaTecnico() {
 		Servico servico = new Servico();
 		Scanner input = new Scanner(System.in);
-		String descricao, descricaoC = null, continuar;
+		String descricao, descricaoC = "", continuar, continuar2;
+		int index;
+		double valor = -1;
 		
-		System.out.println("\n-----------Realização do serviço-----------");	
-		imprimirSolicitacoes();
-			if (solicitaServicos.size() > 0) {
-				do {
+		if (solicitaServicos.size() > 0) {
+			do {
+				System.out.println("\n-----------Realização do serviço-----------");	
+				imprimirSolicitacoes();
+				
+				try {
 					System.out.println("Digite o ID da solicitação que deseja realizar: ");
-					int index = buscaIndex(input.nextInt());
+					index = Integer.parseInt(input.nextLine());
+					index = buscaIndex(index);
+				}
+				catch(Exception e) {
+					index = -1;
+				}				
+				
+				if (index >= 0) {
+					System.out.println("Data de início do serviço: ");
+					servico.setDataDeInicio(input.nextLine());
 					
-					if (index >= 0) {					
-						System.out.println("Data de início do serviço: ");
-						servico.setDataDeInicio(input.nextLine());
-						
-						System.out.println("Data de conclusão do serviço: ");
-						servico.setDataDeConclusao(input.nextLine());
-						
-						System.out.println("Descrição do problema: ");
-						servico.setDescricaoTecnica(input.nextLine());					
+					System.out.println("Data de conclusão do serviço: ");
+					servico.setDataDeConclusao(input.nextLine());
+					
+					System.out.println("Descrição do problema: ");
+					servico.setDescricaoTecnica(input.nextLine());
+					
+					do {
+						System.out.println("Digite UM dos materiais utilizados: ");
+						descricao = input.nextLine();
+						if (verificaMateriais(descricao) > 0) {
+							descricaoC += " | " + descricao;
+						}
+						else {
+							cadastrarMaterial();
+							descricaoC += " | " + descricao;
+						}
 						
 						do {
-							System.out.println("Digite UM dos materiais utilizados: ");
-							descricao = input.nextLine();
-							if (verificaMateriais(descricao) > 0) {
-								descricaoC += " | " + descricao;
-							}
-							else {
-								cadastrarMaterial();
-								descricaoC += " | " + descricao;
-							}
 							System.out.print("\nDeseja cadastrar mais materiais? (1 - Sim / 2 - Não)");
-							continuar = input.nextLine().replace('.', ',');
+							continuar = input.nextLine();
 							
 							if (!continuar.equals("1") && !continuar.equals("2"))
 								System.out.println("Opção inválida");
 							
-						}while(!continuar.equals("2"));
+						}while(!continuar.equals("1") && !continuar.equals("2"));							
 						
-						servico.setMateriais(descricaoC);
-						
-						System.out.println("Valor do serviço: ");
-						servico.setValor(input.nextFloat());
-						
-						solicitaServicos.add(index, servico);
-					}
-					else {
-						System.out.println("ID Inválido");
-					}
-					System.out.print("\nDeseja realizar mais serviços? (1 - Sim / 2 - Não)");
-					continuar = input.nextLine();
+					}while(!continuar.equals("2"));
 					
-					if (!continuar.equals("1") && !continuar.equals("2"))
+					servico.setMateriais(descricaoC);
+					do {
+						try {
+							System.out.println("Valor do serviço: ");
+							valor = Double.parseDouble(input.nextLine());
+							servico.setValor(valor);
+						}
+						catch(Exception e) {
+							valor = -1;
+							System.out.println("Insira um valor válido!\n");		
+						}					
+					}while(valor < 0);
+					
+					servico.setId(solicitaServicos.get(index).getId());
+					servico.setDataDeSolicitacao(solicitaServicos.get(index).getDataDeSolicitacao());
+					servico.setCliente(solicitaServicos.get(index).getCliente());
+					servico.setAtendente(solicitaServicos.get(index).getAtendente());
+					servico.setTecnico(solicitaServicos.get(index).getTecnico());
+					servico.setDescricaoCliente(solicitaServicos.get(index).getDescricaoCliente());
+					solicitaServicos.remove(index);					
+					servicos.add(servico);
+				}
+				else {
+					System.out.println("ID Inválido");
+				}
+				do {
+					System.out.print("\nDeseja realizar mais serviços? (1 - Sim / 2 - Não)");
+					continuar2 = input.nextLine();
+					
+					if (!continuar2.equals("1") && !continuar2.equals("2"))
 						System.out.println("Opção inválida");
-				}while(!continuar.equals("2"));								
-			}
-			else {
-				System.out.println("Não há solicitações para serem feitas!");
-			}		
+					
+				}while(!continuar2.equals("1") && !continuar2.equals("2"));	
+				
+			}while(!continuar2.equals("2"));
 		}
+		else {
+			System.out.println("Não há solicitações para serem feitas!");
+		}		
+	}
 	public void imprimirTecnico() {
 		System.out.println("|----------------TECNICOS--------------|");
 		for(Tecnico tecnico : tecnicos) {			
@@ -308,6 +341,23 @@ public class Main {
 		}
 		System.out.println("|------------------------------------|");
 	}
+	public void imprimirServicos() {
+		for (Servico servico : servicos) {
+			System.out.println("\nID: " + servico.getId());
+			System.out.println("Cliente: " + servico.getCliente());
+			System.out.println("Atendente: " + servico.getAtendente());
+			System.out.println("Técnico: " + servico.getTecnico());
+			System.out.println("Data da solicitação: " + servico.getDataDeSolicitacao());
+			System.out.println("Descrição da solicitação: " + servico.getDescricaoCliente());
+			System.out.println("Data de início: " + servico.getDataDeInicio());
+			System.out.println("Data de conclusão: " + servico.getDataDeConclusao());
+			System.out.println("Materiais utilizados: " + servico.getMateriais());
+			System.out.println("Descrição do serviço: " + servico.getDescricaoTecnica());
+			System.out.println("Valor do serviço: " + servico.getValor());
+		}
+		System.out.println("|------------------------------------|\n");
+	}
+	
 	public int buscaIndex(int id) {
 		for (SolicitaServico solicita: solicitaServicos) {
 			if(solicita.getId() == id) {
@@ -330,25 +380,15 @@ public class Main {
 		Scanner input = new Scanner (System.in);
 		String opcao;
 		
-		do {
-			idMaterial ++;
-			System.out.println("|----------------Cadastrar Material--------------|");
-			material.setID(idMaterial);
-			System.out.println("Descrição do material: ");
-			material.setDescricao(input.nextLine());
-			System.out.println("Valor do material: ");
-			material.setValor(input.nextDouble());
-			
-			materiais.add(material);
-			
-			do {
-				System.out.print("\nDeseja cadastrar mais materiais? (1 - Sim / 2 - Não)");
-				opcao = input.nextLine();
-				
-				if (!opcao.equals("1") && !opcao.equals("2"))
-					System.out.println("Opção inválida");
-			}while(!opcao.equals("1") && !opcao.equals("2"));
-		}while(!opcao.equals("2"));
+		idMaterial ++;
+		System.out.println("|----------------Cadastrar Material--------------|");
+		material.setID(idMaterial);
+		System.out.println("Descrição do material: ");
+		material.setDescricao(input.nextLine());
+		System.out.println("Valor do material: ");
+		material.setValor(input.nextDouble());
+		
+		materiais.add(material);		
 	}
 	public int verificaMateriais(String descricao) {
 		for (Material material: materiais) {
