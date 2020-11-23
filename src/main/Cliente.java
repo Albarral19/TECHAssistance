@@ -30,6 +30,5 @@ public class Cliente extends Pessoa{
 	}
 	public String getEndereco() {
 		return endereco;
-	}
-	
+	}	
 }

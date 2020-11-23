@@ -1,6 +1,6 @@
 package main;
 
-public class Servicos extends SolicitaServico{
+public class Servico extends SolicitaServico{
 	private String dataDeInicio;
 	private String dataDeConclusao;
 	private String materiais;

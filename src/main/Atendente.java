@@ -15,5 +15,4 @@ public class Atendente extends Pessoa{
 	public String getCPF() {
 		return cpf;
 	}
-
 }
